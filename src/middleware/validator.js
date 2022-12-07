@@ -23,16 +23,10 @@ async function regValidator(req, res, next) {
   }
 }
 
-async function userValidator(req, res, next) {
-  try {
-    const { secret } = req.body;
-    const user = await UserSchema.findOne({ secret });
-    if (!user) throw new Error();
-    next();
-  } catch (error) {
-    console.log('error on JOI validator ===', error);
-    res.status(401).json({ error: true, message: 'login for posting', data: [] });
-  }
+async function userValidator(secret) {
+  const user = await UserSchema.findOne({ secret });
+  if (!user) return false;
+  return user;
 }
 
 module.exports = { regValidator, userValidator };

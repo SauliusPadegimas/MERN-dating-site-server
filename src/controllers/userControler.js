@@ -22,11 +22,8 @@ async function saveUser(req, res) {
   try {
     const ifTaken = await UserSchema.findOne({ username });
     if (ifTaken) throw new Error('Username taken');
-    const resp = await user.save();
-    const { username: savedName } = resp;
-    res
-      .status(201)
-      .json({ error: false, message: `new User ${savedName} created. Now You can log in.` });
+    await user.save();
+    res.status(201).json({ error: false, message: 'Now you can log in.' });
   } catch (error) {
     console.log('error ===', error);
     res.status(400).json({
@@ -34,11 +31,6 @@ async function saveUser(req, res) {
       message: error.message,
     });
   }
-}
-
-async function getUsers(req, res) {
-  const users = await UserSchema.find();
-  res.json({ users });
 }
 
 async function getUser(req, res) {
@@ -68,7 +60,6 @@ async function loginUser(req, res) {
 
 module.exports = {
   saveUser,
-  getUsers,
   loginUser,
   getUser,
 };
