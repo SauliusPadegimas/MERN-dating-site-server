@@ -2,7 +2,7 @@ const Joi = require('joi');
 const UserSchema = require('../schemas/userSchema');
 
 const schema = Joi.object({
-  username: Joi.string().trim().min(3).max(30).required().regex(/[&]/, { invert: true }),
+  username: Joi.string().trim().min(3).max(15).required().regex(/[&]/, { invert: true }),
   password: Joi.string().min(3).max(30).required(),
 
   gender: Joi.string().valid('man', 'woman').required(),
