@@ -23,6 +23,17 @@ module.exports = (io) => {
       socket.emit('user', { ...user._doc, password: '' });
     });
 
+    socket.on('deleteImg', async (secret, photo) => {
+      const user = await UserSchema.findOne({ secret });
+      if (!user) {
+        return socket.emit('unauthorized');
+      }
+      const index = user.photos.indexOf(photo);
+      user.photos.splice(index, 1);
+      await user.save();
+      socket.emit('user', { ...user._doc, password: '' });
+    });
+
     socket.on('users', async () => {
       const users = await UserSchema.find();
       socket.emit('users', users);
