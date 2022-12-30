@@ -37,6 +37,7 @@ async function getUser(req, res) {
   const { secret } = req.params;
   try {
     const user = await UserSchema.findOne({ secret });
+    // this line makes sure, password data is not sent to front-end
     res.json({ error: false, user: { ...user._doc, password: '' } });
   } catch (error) {
     res.status(404).json({ error: true, message: 'user not found' });

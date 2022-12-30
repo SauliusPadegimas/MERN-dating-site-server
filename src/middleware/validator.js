@@ -1,3 +1,4 @@
+// JOI is npm package, a middleware for validating express inputs using Joi schemas.
 const Joi = require('joi');
 const UserSchema = require('../schemas/userSchema');
 

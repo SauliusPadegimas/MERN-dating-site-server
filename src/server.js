@@ -23,9 +23,7 @@ const { PORT } = process.env;
 // MiddleWare
 app.use(morgan('dev'));
 app.use(cors());
-// kad gautame request.body galetume matyti JSON atsiųstus duomenis turim įjungti JSON atkodavimą;
 app.use(express.json());
-// siunčia media filus
 // TEST DB CONNECTION
 testDbConnection();
 // ROUTES
@@ -33,15 +31,14 @@ testDbConnection();
 app.get('/', (req, res) => res.json({ msg: 'server online' }));
 
 app.use('/api', mainRouter);
+
+// ROUTER FOR MEDIA FILES
 app.use('/images', express.static('images'));
 
 app.use((req, res) => {
   res.status(404).json({ msg: 'Not found' });
 });
 
-http.listen(PORT, () =>
-  // eslint-disable-next-line implicit-arrow-linebreak
-  console.log(`Server is listening to port: ${PORT}`.cyan.bold)
-);
+http.listen(PORT, () => console.log(`Server is listening to port: ${PORT}`.cyan.bold));
 
 socketRouter(io);
